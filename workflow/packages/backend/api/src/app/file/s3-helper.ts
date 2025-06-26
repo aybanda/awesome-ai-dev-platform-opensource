@@ -7,6 +7,24 @@ import { AppSystemProp, exceptionHandler } from 'workflow-server-shared'
 import { apId, FileType, ProjectId } from 'workflow-shared'
 import { system } from '../helper/system/system'
 
+const ALLOWED_S3_ENDPOINTS = [
+  "https://s3.amazonaws.com",
+  "https://s3.us-east-1.amazonaws.com",
+  // Add other trusted endpoints as needed
+];
+
+function isAllowedS3Endpoint(url?: string): boolean {
+  if (!url) return true; // Default AWS SDK endpoint if not set
+  try {
+    const parsed = new URL(url);
+    return ALLOWED_S3_ENDPOINTS.some(allowed =>
+      parsed.origin === allowed
+    );
+  } catch {
+    return false;
+  }
+}
+
 export const s3Helper = (log: FastifyBaseLogger) => ({
     constructS3Key(platformId: string | undefined, projectId: ProjectId | undefined, type: FileType, fileId: string): string {
         const now = dayjs()
@@ -134,6 +152,11 @@ const getS3Client = () => {
     const useIRSA = system.getBoolean(AppSystemProp.S3_USE_IRSA)
     const region = system.get<string>(AppSystemProp.S3_REGION)
     const endpoint = system.get<string>(AppSystemProp.S3_ENDPOINT)
+
+    if (!isAllowedS3Endpoint(endpoint)) {
+      throw new Error("Invalid or untrusted S3 endpoint. Only allow-listed endpoints are permitted.");
+    }
+
     const options: S3ClientConfig = {
         region,
         forcePathStyle: endpoint ? true : undefined,
