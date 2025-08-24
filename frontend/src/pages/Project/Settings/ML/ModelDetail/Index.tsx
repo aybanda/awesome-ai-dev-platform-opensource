@@ -491,27 +491,24 @@ const ModelDetail = () => {
   const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
   useEffect(() => {
+    // Import environment configuration to prevent SSRF vulnerability
+    import('../../../../config/environment').then(({ getSafeModelTrialUrl }) => {
+      const projectID = 1;
+      const controller = new AbortController();
 
-    const backendURL = "https://127.0.0.1:9090";
-    const projectID = 1;
-    const controller = new AbortController();
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          project: projectID.toString(),
+        }),
+        signal: controller.signal,
+      };
 
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        project: projectID.toString(),
-      }),
-      signal: controller.signal,
-    };
+      // Use safe, environment-based URL instead of hardcoded internal URL
+      const modelTrialUrl = getSafeModelTrialUrl();
 
-    let url = backendURL;
-
-    while (url.endsWith("/")) {
-      url = url.substring(0, url.length - 2);
-    }
-
-    fetch(backendURL + "/model_trial", requestOptions)
+      fetch(modelTrialUrl, requestOptions)
       .then(r => r.json())
       .then(r => {
         if (controller.signal.aborted || !Object.hasOwn(r, "share_url")) {
